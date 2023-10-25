@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    group:
+      local:
+        - inMemoryDb
+  webflux:
+    base-path: /user-ms
+  sql:
+    init:
+      mode: always
+
+application:
+  security:
+    jwt:
+      secret-key: 4C81EE5372916AAC51C9061D754EEEB2EF7A46DB303208C3EE1EBDBE834B629A
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
