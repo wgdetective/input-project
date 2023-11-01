@@ -3,49 +3,27 @@ package com.wgdetective.input.project;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import java.util.UUID;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wgdetective.input.project.auth.model.Role;
 import com.wgdetective.input.project.controller.dto.CreateNodeDto;
 import com.wgdetective.input.project.repository.sql.SqlNodeRepository;
 import com.wgdetective.input.project.repository.sql.entity.NodeEntity;
-import com.wgdetective.input.project.util.AuthUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
 @ActiveProfiles("local")
-class NodeCRUDUseCaseTests {
-
-    @Autowired
-    private MockMvc client;
+class NodeCRUDUseCaseTests extends AbstractAuthTests {
 
     @Autowired
     private SqlNodeRepository repository;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    private String token;
-
-    @BeforeEach
-    public void init() throws Exception {
-        this.token = "Bearer " + AuthUtils.registerUser(client, UUID.randomUUID().toString(), "12345", Role.CREATOR);
-    }
 
     @Test
     void saveNode() throws Exception {
@@ -55,7 +33,7 @@ class NodeCRUDUseCaseTests {
 
         // when
         client.perform(post("/api/v1/node").content(objectMapper.writeValueAsString(node))
-                .header("Authorization", token)
+                .header(AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
                 // then
                 .andExpect(status().isOk())
@@ -78,7 +56,7 @@ class NodeCRUDUseCaseTests {
         node.setValue("Value2");
         // when
         client.perform(put("/api/v1/node").content(objectMapper.writeValueAsString(node))
-                .header("Authorization", token)
+                .header(AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
                 // then
                 .andExpect(status().isOk())
@@ -99,7 +77,7 @@ class NodeCRUDUseCaseTests {
 
         // when
         client.perform(get("/api/v1/node/" + node.getId())
-                .header("Authorization", token)
+                .header(AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
                 // then
                 .andExpect(status().isOk())
@@ -121,7 +99,7 @@ class NodeCRUDUseCaseTests {
 
         // when
         client.perform(get("/api/v1/node")
-                .header("Authorization", token)
+                .header(AUTHORIZATION, accessToken)
                 .contentType(MediaType.APPLICATION_JSON))
                 // then
                 .andExpect(status().isOk())

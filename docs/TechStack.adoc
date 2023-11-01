@@ -1,0 +1,11 @@
+= Technical Stack
+
+BE:
+
+- Java 17
+- Spring (Boot, JPA, Security)
+- MysqlDB
+
+FE:
+
+- ?

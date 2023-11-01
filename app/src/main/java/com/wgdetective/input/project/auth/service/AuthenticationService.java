@@ -3,9 +3,9 @@ package com.wgdetective.input.project.auth.service;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wgdetective.input.project.auth.dto.AuthenticationRequest;
 import com.wgdetective.input.project.auth.dto.AuthenticationResponse;
-import com.wgdetective.input.project.auth.dto.RegisterRequest;
+import com.wgdetective.input.project.auth.dto.SignInRequest;
+import com.wgdetective.input.project.auth.dto.SignUpRequest;
 import com.wgdetective.input.project.auth.model.Token;
 import com.wgdetective.input.project.auth.model.TokenType;
 import com.wgdetective.input.project.auth.model.User;
@@ -34,10 +34,9 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse signUp(SignUpRequest request) {
         var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
+                .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
@@ -52,7 +51,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -92,7 +91,7 @@ public class AuthenticationService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-    public void refreshToken(
+    public void refresh(
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);

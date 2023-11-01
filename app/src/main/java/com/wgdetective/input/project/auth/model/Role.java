@@ -18,21 +18,17 @@ import static com.wgdetective.input.project.auth.model.Permission.UPDATE;
 @Getter
 public enum Role {
 
-    USER(Collections.emptySet()), CREATOR(
-            Set.of(
-                    CREATE,
-                    READ,
-                    UPDATE,
-                    DELETE)), READER(
-                            Set.of(
-                                    READ));
+    USER(Collections.emptySet()), MEAL_ALL(Set.of(CREATE,
+            READ,
+            UPDATE,
+            DELETE)), MEAL_READ(Set.of(READ));
 
     private final Set<Permission> permissions;
 
     public List<SimpleGrantedAuthority> getAuthorities() {
         var authorities = getPermissions()
                 .stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .map(permission -> new SimpleGrantedAuthority(permission.name()))
                 .collect(Collectors.toList());
         authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
         return authorities;

@@ -2,9 +2,9 @@ package com.wgdetective.input.project.auth.controller;
 
 import java.io.IOException;
 
-import com.wgdetective.input.project.auth.dto.AuthenticationRequest;
 import com.wgdetective.input.project.auth.dto.AuthenticationResponse;
-import com.wgdetective.input.project.auth.dto.RegisterRequest;
+import com.wgdetective.input.project.auth.dto.SignInRequest;
+import com.wgdetective.input.project.auth.dto.SignUpRequest;
 import com.wgdetective.input.project.auth.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,23 +22,23 @@ public class AuthenticationController {
 
     private final AuthenticationService service;
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(service.register(request));
+    @PostMapping("/sign-up")
+    public ResponseEntity<AuthenticationResponse> signUp(
+            @RequestBody SignUpRequest request) {
+        return ResponseEntity.ok(service.signUp(request));
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(service.authenticate(request));
+    @PostMapping("/sign-in")
+    public ResponseEntity<AuthenticationResponse> signIn(
+            @RequestBody SignInRequest request) {
+        return ResponseEntity.ok(service.signIn(request));
     }
 
-    @PostMapping("/refresh-token")
-    public void refreshToken(
+    @PostMapping("/refresh")
+    public void refresh(
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        service.refreshToken(request, response);
+        service.refresh(request, response);
     }
 
 }

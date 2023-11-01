@@ -1,6 +1,5 @@
-package com.wgdetective.input.project.auth.controller;
+package com.wgdetective.input.project.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,20 +8,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth-test")
-@PreAuthorize("hasAnyRole('READER', 'CREATOR')")
-@RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('MEAL_ALL', 'MEAL_READ')")
 public class TestAuthController {
 
     @GetMapping
-    @PreAuthorize("hasAuthority('read')")
+    @PreAuthorize("hasAuthority('READ')")
     public String get() {
         return "Get result";
     }
 
     @DeleteMapping
-    @PreAuthorize("hasAuthority('delete')")
+    @PreAuthorize("hasAuthority('DELETE')")
     public String delete() {
-        return "Post result";
+        return "Delete result";
     }
 
 }

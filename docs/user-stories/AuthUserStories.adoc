@@ -1,0 +1,105 @@
+= Auth User-Stories
+
+== A1. As a User, I want to Sign Up in the System using email, so that I can Sign In.
+
+Request:
+
+ POST api/v1/auth/sign-up
+
+[,json]
+----
+{
+    "email": "test@test.com",
+    "password" : "!123qQ"
+}
+----
+
+Response:
+[,json]
+----
+{
+    "access_token": "1234=",
+    "refresh_token" : "1234="
+}
+----
+
+Options:
+
+- such user is already registered
+
+== A2. As a User, I want to Sign In to the System using email, so that I can use it.
+
+Request:
+
+ POST /v1/auth/sign-in
+
+[,json]
+----
+{
+    "email": "test@test.com",
+    "password" : "!123qQ"
+}
+----
+
+Response:
+[,json]
+----
+{
+    "access_token": "1234=",
+    "refresh_token" : "1234="
+}
+----
+
+Options:
+
+- wrong credentials
+
+== A3. As a User, I want to refresh token, so that I'm getting new tokens.
+
+Request:
+
+ GET /v1/auth/refresh
+
+[]
+----
+Headers:
+ref: 1234=
+----
+
+Response:
+[,json]
+----
+{
+    "access_token": "1234=",
+    "refresh_token" : "1234="
+}
+----
+
+Options:
+
+- wrong credentials
+- expired refresh token
+
+== A4. As a User, I want to get self-info, so that I'm getting it.
+
+Request:
+
+ GET /v1/user
+
+Response:
+[,json]
+----
+{
+    "id": 1,
+    "name" : "Test Test",
+    "roles" : ["MEAL_READ", "MEAL_WRITE"],
+    "email" : "test@test.com"
+}
+----
+
+== A5. As a User, I want to Sign Up in the System using Google, so that I can Sign In.
+
+== A6. As a User, I want to Sign In to the System using Google, so that I can use it.
+
+
+

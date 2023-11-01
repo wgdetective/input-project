@@ -1,5 +1,5 @@
 # INPUT PROJECT
-Application for tracking of your organism input. 
+Application for tracking of your organism input.
 
 ## Based on
 * https://github.com/wgdetective/authentication-example

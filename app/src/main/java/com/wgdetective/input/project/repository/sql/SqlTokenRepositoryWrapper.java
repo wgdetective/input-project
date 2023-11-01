@@ -18,6 +18,8 @@ public class SqlTokenRepositoryWrapper implements TokenRepository {
 
     private final SqlTokenEntityMapper mapper;
 
+    private final SqlUserRepository userRepository;
+
     @Override
     public List<Token> findByUserIdAndExpiredAndRevoked(Long id) {
         return repository.findByUserIdAndExpiredAndRevoked(id, false, false).stream()
@@ -40,6 +42,11 @@ public class SqlTokenRepositoryWrapper implements TokenRepository {
                 repository.saveAll(tokens.stream().map(mapper::map).toList()).spliterator(),
                 false)
                 .map(mapper::map).toList();
+    }
+
+    @Override
+    public void deleteByUserEmail(final String email) {
+        userRepository.findByEmail(email).ifPresent(user -> repository.deleteByUserId(user.getId()));
     }
 
 }

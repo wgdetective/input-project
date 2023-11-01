@@ -1,0 +1,36 @@
+= Business Entities
+
+== Users
+*User* - main system actor.
+
+* id
+* name
+* roles ()
+* email
+
+== Events
+
+*Event* - durable action
+
+* id
+* userId
+* start_time
+* duration
+* description
+* placeId
+* rate
+
+*Meal* - eating event
+
+* event
+* type (BREAKFAST, LUNCH, DINNER, SNACK, OTHER)
+
+*Drinking* - drinking event
+
+* event
+* difficulty (LOW, MIDDLE, HIGH, ULTRA)
+
+*Workout* - training in a gym event
+
+* event
+* workoutDetails

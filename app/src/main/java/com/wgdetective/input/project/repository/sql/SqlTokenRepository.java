@@ -14,4 +14,6 @@ public interface SqlTokenRepository extends CrudRepository<TokenEntity, Long> {
 
     Optional<TokenEntity> findByToken(String token);
 
+    void deleteByUserId(Long userId);
+
 }
